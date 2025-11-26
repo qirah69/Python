@@ -21,3 +21,6 @@ class RepoBook:
                 book.description = updated_book.description
                 book.author = updated_book.author
                 return
+        
+    def search_by_title(self, title_query):
+        return [book for book in self._books if title_query.lower() in book.title.lower()]

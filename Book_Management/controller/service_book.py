@@ -1,4 +1,4 @@
-from repo.repo import RepoBook
+from repo.repo_book import RepoBook
 from domain.domain import Book
 
 class ServiceBook:
@@ -30,3 +30,8 @@ class ServiceBook:
     def update_book(self, new_book):
         self.__validate(new_book)
         self._repo.update_book(new_book)
+
+    def search_by_title(self, title_query):
+        if not isinstance(title_query, str):
+            raise TypeError("Title query must be a string.")
+        return self._repo.search_by_title(title_query)
