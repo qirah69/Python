@@ -23,6 +23,9 @@ class Console:
             print("10. Search Clients by Name")
             print("11. Rent a Book")
             print("12. Return Book")
+            print("13. Get Most Rented Books")
+            print("14. Get Most Active Clients")
+            print("15. Get Book Borrowers Report")
             print("0. Exit")
             choice = input("Choose an option: ")
             match choice:
@@ -132,6 +135,37 @@ class Console:
                         returned_date = input("Enter Returned Date (YYYY-MM-DD): ")
                         self._service_rental.return_book(rental_id, returned_date)
                         print("Book returned successfully.")
+                    except Exception as e:
+                        print(f"Error: {e}")
+                case '13':
+                    try:
+                        most_rented = self._service_rental.get_most_rented_books()
+                        if not most_rented:
+                            print("No rentals found.")
+                        else:
+                            for book, count in most_rented:
+                                print(f"{book} - Rented {count} times")
+                    except Exception as e:
+                        print(f"Error: {e}")
+                case '14':
+                    try:
+                        most_active = self._service_rental.get_most_active_clients()
+                        if not most_active:
+                            print("No rentals found.")
+                        else:
+                            for client, count in most_active:
+                                print(f"{client} - Rented {count} times")
+                    except Exception as e:
+                        print(f"Error: {e}")
+                case '15':
+                    try:
+                        book_id = int(input("Enter Book ID for borrowers report: "))
+                        borrowers = self._service_rental.get_report_book_borrowers(book_id)
+                        if not borrowers:
+                            print("No borrowers found for this book.")
+                        else:
+                            for client in borrowers:
+                                print(f"Client: {client['Client']} rented the book: {client['Rented Date']}")
                     except Exception as e:
                         print(f"Error: {e}")
                 case '0':
