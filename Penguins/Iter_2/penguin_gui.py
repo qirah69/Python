@@ -35,36 +35,50 @@ def update_inputs(event=None):
     """Updates the labels and input boxes based on the selected command."""
     cmd = cmd_var.get()
 
-    # Default: Show everything with generic names
-    arg2_entry.grid()
-    arg2_label.grid()
-    arg1_label.config(text="Arg 1:")
-    arg2_label.config(text="Arg 2:")
+    # --- 1. RESET EVERYTHING (Clear and Show All) ---
     arg1_entry.delete(0, tk.END)
     arg2_entry.delete(0, tk.END)
-    # Customize based on command
+    
+    # Crucial Fix: Force Arg 1 to be visible again!
+    arg1_label.grid()
+    arg1_entry.grid()
+    
+    # Default: Show Arg 2 as well
+    arg2_label.grid()
+    arg2_entry.grid()
+
+    # Reset text to generic defaults
+    arg1_label.config(text="Arg 1:")
+    arg2_label.config(text="Arg 2:")
+
+    # --- 2. CUSTOMIZE (Hide specific things) ---
     if cmd == 'load':
         arg1_label.config(text="Filename:")
         arg2_entry.grid_remove()  # Hide 2nd box
         arg2_label.grid_remove()  # Hide 2nd label
+        
     elif cmd == 'filter':
         arg1_label.config(text="Column:")
         arg2_label.config(text="Value:")
+        
     elif cmd == 'sort':
         arg1_label.config(text="Column:")
         arg2_label.config(text="Order (asc/desc):")
+        
     elif cmd == 'augment':
         arg1_label.config(text="Percentage:")
         arg2_label.config(text="Option (duplicate/create):")
+        
     elif cmd == 'scatter':
         arg1_label.config(text="X Column:")
         arg2_label.config(text="Y Column:")
+        
     elif cmd in ('fact', 'art'):
-        arg1_entry.grid_remove()  # Hide box 1
-        arg1_label.grid_remove()  # Hide label 1
-        arg2_entry.grid_remove()  # Hide box 2
-        arg2_label.grid_remove()  # Hide label 2``
-
+        # Now we hide Arg 1 (and Arg 2) specifically for these options
+        arg1_entry.grid_remove()
+        arg1_label.grid_remove()
+        arg2_entry.grid_remove()
+        arg2_label.grid_remove()
 def execute_command():
     """Gets inputs and runs the appropriate logic function."""
     global data # We need to modify the global 'data' variable
